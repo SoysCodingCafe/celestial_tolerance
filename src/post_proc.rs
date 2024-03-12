@@ -199,9 +199,9 @@ pub struct PostProcessSettings {
 	pub location: Vec2,
     pub time: f32,
 	pub start_time: f32,
-	pub end_time: f32,
-    #[cfg(feature = "webgl2")]
-    _webgl2_padding: Vec3,
+	// pub end_time: f32,
+    // #[cfg(feature = "webgl2")]
+    // _webgl2_padding: Vec3,
 }
 
 fn update_settings(
@@ -218,14 +218,25 @@ fn update_settings(
 				setting.location = ev.location;
 				setting.location.x = setting.location.x/ORTHO.x;
 				setting.location.y = -setting.location.y/ORTHO.y;
-				setting.start_time = time.elapsed_seconds();
-				setting.end_time = match ev.selected_bell {
-					0 => 0.7,
-					1 => 0.6,
-					2 => 3.0,
-					3 => 1.0,
-					_ => 1.0,
+				setting.start_time = time.elapsed_seconds()*100.0;
+				//println!("Elapsed Time: {}", setting.start_time/100.0);
+				// setting.end_time = match ev.selected_bell {
+				// 	0 => 0.7,
+				// 	1 => 0.6,
+				// 	2 => 3.0,
+				// 	3 => 1.0,
+				// 	_ => 1.0,
+				// };
+
+				setting.start_time = setting.start_time + match ev.selected_bell {
+					0 => (7<<16) as f32,
+					1 => (6<<16) as f32,
+					2 => (30<<16) as f32,
+					3 => (10<<16) as f32,
+					_ => (10<<16) as f32,
 				};
+				//println!("Big Time: {}", setting.start_time);
+				//println!("Small Time: {}", (setting.start_time as u32 & 65535) as f32/100.0);
 		}
 
 		if *current_state != GameState::Game {

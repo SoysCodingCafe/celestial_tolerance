@@ -103,7 +103,7 @@ fn setup(
 		PostProcessSettings {
 			time: 0.0,
 			start_time: -100.0,
-			end_time: 0.0,
+			//end_time: 0.0,
 			location: Vec2::ZERO,
 		},
 	));

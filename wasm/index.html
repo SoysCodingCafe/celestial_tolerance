@@ -9,10 +9,10 @@
 </head>
 
 <body style="margin: 0px;" oncontextmenu="return false;">
-  <canvas id="canvas"></canvas>
+  <canvas id="canvas" width="1280" height="720"></canvas>
   <script type="module">
     import './restart-audio-context.js'
-    import init from './bevy_game.js'
+    import init from './goat_heard.js'
 
     init().catch((error) => {
       if (!error.message.startsWith("Using exceptions for control flow, don't mind me. This isn't actually an error!")) {

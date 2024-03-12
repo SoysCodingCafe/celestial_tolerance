@@ -8,11 +8,11 @@ struct PostProcessSettings {
 	location: vec2<f32>,
     time: f32,
 	start_time: f32,
-	end_time: f32,
-#ifdef SIXTEEN_BYTE_ALIGNMENT
-    // WebGL2 structs must be 16 byte aligned.
-    _webgl2_padding: vec3<f32>
-#endif
+// 	end_time: f32,
+// #ifdef SIXTEEN_BYTE_ALIGNMENT
+//     // WebGL2 structs must be 16 byte aligned.
+//     _webgl2_padding: vec3<f32>
+// #endif
 }
 @group(0) @binding(2) var<uniform> settings: PostProcessSettings;
 
@@ -55,10 +55,13 @@ fn bell_ripple_2(
 	var boost = 0.0;
 	var fade = 1.0;
 
+	var start_time = f32(u32(settings.start_time) & u32(65535))/100.0;
+	var end_time = (settings.start_time / pow(2.0, 16.0))/10.0;
+
 	var t = settings.time;
-	let st = settings.start_time;
+	let st = start_time;
 	let dt = t-st;
-	let et = st + settings.end_time;
+	let et = st + end_time;
 	let tt = et-st;
 	let f = dt/tt;
 	let l = settings.location;
