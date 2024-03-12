@@ -39,7 +39,7 @@ features = [
 	# "bevy_gltf",            	# GLTF 3D assets format support
 	"bevy_text",				# Text/font rendering
 	# "bevy_ui",            	# UI toolkit
-	"animation",				# Animation support
+	# "animation",				# Animation support
 	# "tonemapping_luts",   	# Support different camera Tonemapping modes (enables KTX2+zstd)
   	"default_font",      	 	# Embed a minimal default font for text/UI
 
@@ -60,8 +60,8 @@ features = [
 	# (add any of these that you need)
 
 	# Bevy functionality:
-	"asset_processor",      	# Asset processing
-	"file_watcher",         	# Asset hot-reloading
+	# "asset_processor",      	# Asset processing
+	# "file_watcher",         	# Asset hot-reloading
 	# "subpixel_glyph_atlas", 	# Subpixel antialiasing for text/fonts
 	# "serialize",            	# Support for `serde` Serialize/Deserialize
 	# "async-io",             	# Make bevy use `async-io` instead of `futures-lite`
@@ -86,7 +86,7 @@ features = [
 	# "shader_format_spirv", 	# SPIR-V shader support
 
 	# Platform-specific:
-	"wayland",					# Linux: Support Wayland windowing system
+	# "wayland",					# Linux: Support Wayland windowing system
 	# "accesskit_unix",       	# (Unix-like) AccessKit integration for UI Accessibility
   	# "bevy_dynamic_plugin",  	# (Desktop) support for loading of `DynamicPlugin`s
 
