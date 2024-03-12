@@ -99,7 +99,7 @@ features = [
 	# "trace_chrome",      		# Tracing using the Chrome format
 	# "wgpu_trace",        		# WGPU/rendering tracing
 	# "debug_glam_assert", 		# Assertions to validate math (glam) usage
-	"embedded_watcher",  		# Hot-reloading for Bevy's internal/builtin assets
+	# "embedded_watcher",  		# Hot-reloading for Bevy's internal/builtin assets
 ]
 
 [dependencies.bevy_kira_audio]
