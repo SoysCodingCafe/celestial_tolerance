@@ -1,22 +1,83 @@
-// Bevy code commonly triggers these lints and they may be important signals
-// about code quality. They are sometimes hard to avoid though, and the CI
-// workflow treats them as errors, so this allows them throughout the project.
-// Feel free to delete this line.
-#![allow(clippy::too_many_arguments, clippy::type_complexity)]
+// Disable Windows console on release builds
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use bevy::prelude::*;
+// Import Bevy game engine essentials
+use bevy::{asset::AssetMetaCheck, core_pipeline::experimental::taa::TemporalAntiAliasPlugin, prelude::*};
+use bevy_kira_audio::AudioPlugin;
+
+// Include modules for different game aspects
+mod helper;
+
+mod cutscene;
+mod enemy;
+mod goat;
+mod land;
+mod loading;
+mod menu;
+mod player;
+mod post_proc;
+mod setup;
+
+// Only include in debug builds
+#[cfg(debug_assertions)]
+mod debug;
 
 fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins)
-        .add_systems(Startup, setup)
-        .run();
-}
+	let default_plugins = DefaultPlugins
+		.set(WindowPlugin {
+			primary_window: Some(Window {
+				title: "Goat Heard".to_string(),
+				mode: bevy::window::WindowMode::BorderlessFullscreen,
+				canvas: Some("#canvas".into()),
+				..default()
+			}), 
+			..default()
+		})
+		.set(ImagePlugin::default_nearest())
+	;
 
-fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn(Camera2dBundle::default());
-    commands.spawn(SpriteBundle {
-        texture: asset_server.load("ducky.png"),
-        ..Default::default()
-    });
+	let mut app: App = App::new();
+	app
+		// Prevents bug in wasm builds where it checks for a file
+		// that doesn't exist.
+		.insert_resource(AssetMetaCheck::Never)
+		.add_plugins((
+			default_plugins,
+			AudioPlugin,
+		))
+		.add_plugins((
+			// Intro animatic and dialogue
+			cutscene::CutscenePlugin,
+			// Enemy movement and interactions
+			enemy::EnemyPlugin,
+			// Goat movement and interations
+			goat::GoatPlugin,
+			// Land placement and interations
+			land::LandPlugin,
+			// State transitions, loads assets
+			loading::LoadingPlugin,
+			// Title screen
+			menu::MenuPlugin,
+			// Player movement and interactions
+			player::PlayerPlugin,
+			// Post processing effects such as chromatic aberration
+			post_proc::PostProcPlugin,
+			// Spawns camera, splash screen, title, level
+			setup::SetupPlugin,
+		))
+	;
+
+	{
+		#[cfg(debug_assertions)]
+		app.add_plugins(debug::DebugPlugin);
+	}
+
+	{
+		#[cfg(not(all(feature = "webgl2", target_arch = "wasm32")))]
+		// Prevents visual distortion in wasm builds
+		app.insert_resource(Msaa::Off)
+			.add_plugins(TemporalAntiAliasPlugin);
+	}
+
+	app.run();
 }
