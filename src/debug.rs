@@ -3,7 +3,7 @@ use bevy::{prelude::*, app::AppExit};
 
 use crate::{goat::GoatMovement, helper::{cart_to_iso, GameState}, setup::REVERT};
 
-use bevy_editor_pls::EditorPlugin;
+// use bevy_editor_pls::EditorPlugin;
 
 pub struct DebugPlugin;
 
