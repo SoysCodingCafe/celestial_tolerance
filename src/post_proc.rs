@@ -211,14 +211,14 @@ fn update_settings(
 	mut ev_r_bell: EventReader<BellEvent>,
 ) {
     for mut setting in &mut settings {
-		setting.time = time.elapsed_seconds();
+		setting.time = time.elapsed_seconds()%600.0;
 		//println!("{}", setting.radius);
 
 		for ev in ev_r_bell.read() {
 				setting.location = ev.location;
 				setting.location.x = setting.location.x/ORTHO.x;
 				setting.location.y = -setting.location.y/ORTHO.y;
-				setting.start_time = time.elapsed_seconds()*100.0;
+				setting.start_time = (time.elapsed_seconds()%600.0)*100.0;
 				//println!("Elapsed Time: {}", setting.start_time/100.0);
 				// setting.end_time = match ev.selected_bell {
 				// 	0 => 0.7,

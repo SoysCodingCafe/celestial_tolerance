@@ -531,5 +531,7 @@ fn return_to_title(
 				},
 			));
 		}
+	} else {
+		title_timer.0.reset();
 	}
 }

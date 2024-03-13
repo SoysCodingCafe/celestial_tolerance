@@ -68,7 +68,7 @@ fn add_assets_to_load(
 
 	assets_to_load.push(asset_server.load::<Image>("fence.png").untyped());
 	assets_to_load.push(asset_server.load::<Image>("iso_map.png").untyped());
-	assets_to_load.push(asset_server.load::<Image>("iso_map.png").untyped());
+	assets_to_load.push(asset_server.load::<Image>("iso_map_top.png").untyped());
 	assets_to_load.push(asset_server.load::<Image>("iso_map_tutorial.png").untyped());
 
 	commands.insert_resource(AssetsLoading(assets_to_load));
